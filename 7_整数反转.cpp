@@ -5,7 +5,19 @@ using namespace std;
 class Solution {
 public:
     int reverse(int x) {
-        return x;
+        long long res = 0;
+        bool minus = false;
+        if (x < 0) {
+            minus = true;
+            x = abs(x);
+        }
+        while(x != 0) {
+            res = res * 10 + x % 10;
+            x /= 10;
+        }
+        if (minus) res = -res;
+        if (res > INT32_MAX || res < INT32_MIN) return 0;
+        return res;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
@@ -14,7 +26,7 @@ public:
 int main() {
     ios::sync_with_stdio(false);
     Solution s;
-    printf("%d", s.reverse(1));
+    printf("%d", s.reverse(-123));
     return 0;
 }
 
