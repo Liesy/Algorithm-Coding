@@ -4,3 +4,7 @@
 # clion插件文件
 doc
 *.json
+*.xml
+*.iml
+CMakeLists.txt
+cmake-build-debug
