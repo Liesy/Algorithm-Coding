@@ -23,7 +23,7 @@ void compute(stack<int> &x, stack<char> &y) {
 }
 
 bool prior_than(char &x, char &y) {
-    if (x == '(') return false;  //特殊情况
+    if (x == '(') return false;  //特殊情况。左括号不参与比较，只有碰见右括号才运算到左括号
     if ((x == '+' || x == '-') && (y == '*' || y == '/')) return false;
     return true;
 }
@@ -48,9 +48,10 @@ int main() {
             while (opts.top() != '(') compute(nums, opts);
             opts.pop();
         } else if (punctuation) {//运算符
-            while (prior_than(opts.top(), s[i])) compute(nums, opts);
+            //当碰见加减号的时候，如果前面是乘除号，那就可以直接把前面的乘除号运算掉，只留下加减号
+            while (prior_than(opts.top(), s[i])) compute(nums, opts);  // 保证符号栈里只有加减
             opts.emplace(s[i]);
-            punctuation = false;  // 运算完之后，就默认
+            punctuation = false;  // 把当前的加减号作为下一批数字的正负号，所以不是运算符
         } else {//处理数字（可能大于1位）
             int start = i;
             if (s[start] == '+' || s[start] == '-') i++;  // 正负号
